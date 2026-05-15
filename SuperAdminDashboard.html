@@ -15,7 +15,6 @@
 
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
-
       background: #f0f2f5;
       min-height: 100vh;
       color: #1a1a1a;
@@ -44,9 +43,9 @@
       height: 50px;
       width: 50px;
       object-fit: contain;
-      background: white;
+      background: transparent;
       border-radius: 50%;
-      padding: 4px;
+      padding: 0px;
     }
 
     .nav-title {
@@ -322,9 +321,7 @@
           </svg>
           Select Employee (Create Admin)
         </div>
-        <div class="employee-list" id="empList">
-          <!-- Emp list here -->
-        </div>
+        <div class="employee-list" id="empList"></div>
       </div>
 
       <!-- Right: Create Form & Current Admins -->
@@ -381,6 +378,12 @@
     const LS_DB = "mevtencia_employeeDatabase";
     const LS_ADMINS = "mev_normalAdmins";
 
+    // ✅ FIX: Registration.html saves name as 'employeeName'
+    // So we check both 'name' and 'employeeName' keys
+    function getEmpName(emp) {
+      return emp.name || emp.employeeName || emp.fullName || 'Unknown';
+    }
+
     function loadData() {
       const employees = JSON.parse(localStorage.getItem(LS_DB) || "{}");
       const admins = JSON.parse(localStorage.getItem(LS_ADMINS) || "[]");
@@ -393,18 +396,33 @@
         empListEl.innerHTML = '<div class="empty-state">No employees found in database.</div>';
       } else {
         empArray.forEach(emp => {
+          const empName = getEmpName(emp); // ✅ sahi name milega
           const isAdmin = admins.some(a => a.employeeId === emp.id);
           const div = document.createElement('div');
           div.className = 'employee-item';
+          // ✅ name ko data attribute mein safe tarike se pass kar rahe hain
           div.innerHTML = `
             <div class="emp-info">
-              <span class="emp-name">${emp.employeeName}</span>
+              <span class="emp-name">${empName}</span>
               <span class="emp-id">${emp.id}</span>
               ${isAdmin ? '<span class="badge badge-admin">Existing Admin</span>' : ''}
             </div>
-            <button class="select-btn" onclick="selectEmp('${emp.id}', '${emp.employeeName}')">Select</button>
+             <button class="select-btn">Select</button>
+
           `;
+
+
+          // ✅ emp object ko data attribute mein store karo
+          div.querySelector('.select-btn').dataset.empId = emp.id;
+          div.querySelector('.select-btn').dataset.empName = empName;
           empListEl.appendChild(div);
+        });
+
+        // ✅ Event delegation — onclick se naam sahi milega
+        empListEl.querySelectorAll('.select-btn').forEach(btn => {
+          btn.addEventListener('click', function () {
+            selectEmp(this.dataset.empId, this.dataset.empName);
+          });
         });
       }
 
@@ -414,7 +432,8 @@
     function selectEmp(id, name) {
       document.getElementById('selectedEmpId').value = id;
       document.getElementById('selectedEmpName').value = name;
-      document.getElementById('newAdminId').value = name.toLowerCase().replace(/\s+/g, '_') + '_admin';
+      document.getElementById('newAdminId').value =
+        (name || '').toLowerCase().replace(/\s+/g, '_') + '_admin';
     }
 
     function renderAdmins() {
@@ -431,7 +450,7 @@
           div.innerHTML = `
             <div class="admin-info-main">
               <span class="admin-id-label">${admin.id}</span>
-              <span class="admin-emp-ref">Ref: ${admin.employeeName}</span>
+              <span class="admin-emp-ref">Ref: ${admin.employeeName || admin.name || 'Unknown'}</span>
             </div>
             <button class="delete-btn" onclick="deleteAdmin(${index})">🗑️</button>
           `;
@@ -453,7 +472,6 @@
 
       const admins = JSON.parse(localStorage.getItem(LS_ADMINS) || "[]");
 
-      // Check if ID already exists
       if (admins.some(a => a.id === adminId) || adminId === 'admin') {
         alert("This Admin ID is already taken. Choose another.");
         return;
@@ -470,7 +488,6 @@
       localStorage.setItem(LS_ADMINS, JSON.stringify(admins));
       alert("Success! Normal Admin portal created.");
 
-      // Clear form
       document.getElementById('selectedEmpId').value = '';
       document.getElementById('selectedEmpName').value = '';
       document.getElementById('newAdminId').value = '';
