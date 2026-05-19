@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 node_modules
 .DS_Store
 attendance.db
 .env
+=======
+node_modules
+.DS_Store
+attendance.db
+.env
+>>>>>>> 6e4cc574b61a6472fdb29c24a8e30a40f5a1a11c

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1123,4 +1124,1131 @@
   </script>
 </body>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#3f51b5" />
+  <title>MEVTENCIA — Admin Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: #3f51b5;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      color: white;
+      font-size: 20px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 25px auto 50px;
+      padding: 0 18px;
+    }
+
+    .header-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px 28px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .header-card h2 {
+      color: #3f51b5;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .header-card p {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .logout-btn {
+      background: #f44336;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .logout-btn:hover {
+      background: #d32f2f;
+    }
+
+    /* Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    @media(min-width: 600px) {
+      .stats-row {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    /* Sandwich stat card highlighted */
+    .stat-card.sandwich-stat {
+      background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+      border: 2px solid #f59e0b;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .stat-card.sandwich-stat:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(245, 158, 11, 0.25);
+    }
+
+    .stat-card .num {
+      font-size: 32px;
+      font-weight: bold;
+      color: #3f51b5;
+      margin-bottom: 6px;
+    }
+
+    .stat-card .num.green {
+      color: #4caf50;
+    }
+
+    .stat-card .num.orange {
+      color: #ff9800;
+    }
+
+    .stat-card .num.blue {
+      color: #2196f3;
+    }
+
+    .stat-card .num.amber {
+      color: #f59e0b;
+    }
+
+    .stat-card .lbl {
+      color: #888;
+      font-size: 12px;
+    }
+
+    /* ── SANDWICH ALERT PANEL ── */
+    .sandwich-panel {
+      background: white;
+      border-radius: 20px;
+      padding: 22px 25px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 22px;
+      border-left: 5px solid #f59e0b;
+      display: none;
+      /* hidden until there are cases */
+    }
+
+    .sandwich-panel.visible {
+      display: block;
+    }
+
+    .sandwich-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sandwich-panel-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sandwich-panel-sub {
+      font-size: 12px;
+      color: #b45309;
+      margin-top: 2px;
+    }
+
+    .sandwich-toggle-btn {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .sandwich-list {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .sandwich-list.open {
+      display: flex;
+    }
+
+    .sandwich-case-card {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .sc-left .sc-name {
+      font-weight: 700;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .sc-left .sc-id {
+      font-size: 11px;
+      color: #888;
+      font-family: monospace;
+    }
+
+    .sc-right {
+      text-align: right;
+    }
+
+    .sc-absent {
+      font-size: 12px;
+      color: #b45309;
+      font-weight: 600;
+    }
+
+    .sc-range {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    .sc-tag {
+      display: inline-block;
+      background: #fde68a;
+      color: #92400e;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .filters input,
+    .filters select {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 2px solid #e0e0e0;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: 'Segoe UI', sans-serif;
+      background: white;
+    }
+
+    .filters input:focus,
+    .filters select:focus {
+      border-color: #3f51b5;
+    }
+
+    .filters input {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-btn {
+      padding: 10px 16px;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #555;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+      border-color: #3f51b5;
+      color: #3f51b5;
+    }
+
+    .export-btn {
+      padding: 10px 18px;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .export-btn:hover {
+      background: #1b5e20;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+    }
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .table-header h3 {
+      color: #3f51b5;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .record-count {
+      color: #888;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 780px;
+    }
+
+    th {
+      background: #3f51b5;
+      color: white;
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e0e7ff;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    tr:hover {
+      background: #f5f7fa;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Highlight rows that have sandwich leave */
+    tr.row-sandwich {
+      background: #fffbeb !important;
+    }
+
+    tr.row-sandwich:hover {
+      background: #fef3c7 !important;
+    }
+
+    .emp-photo {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e0e7ff;
+      cursor: pointer;
+    }
+
+    .emp-photo-placeholder {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #e8eef5;
+      border: 2px solid #e0e7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .emp-photo-placeholder svg {
+      width: 18px;
+      height: 18px;
+      fill: #aaa;
+    }
+
+    .emp-name {
+      font-weight: 700;
+      color: #333;
+    }
+
+    .emp-id {
+      font-size: 11px;
+      color: #888;
+      font-family: monospace;
+    }
+
+    .emp-dept {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .time-val {
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .loc-val {
+      font-size: 11px;
+      color: #777;
+      max-width: 250px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #3f51b5;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .map-link:hover {
+      text-decoration: underline;
+    }
+
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 11px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .badge-fullday {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-halfday {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .badge-working {
+      background: #cce5ff;
+      color: #004085;
+    }
+
+    /* Sandwich badge */
+    .badge-sandwich {
+      background: #fde68a;
+      color: #92400e;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 10px;
+      display: inline-block;
+      margin-top: 5px;
+      border: 1px solid #f59e0b;
+      white-space: nowrap;
+    }
+
+    .empty-row td {
+      text-align: center;
+      padding: 40px 20px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    /* Mobile cards */
+    .mobile-list {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media(max-width: 767px) {
+      .table-container {
+        display: none;
+      }
+
+      .mobile-list {
+        display: flex;
+      }
+    }
+
+    .mob-card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Sandwich highlight on mobile card */
+    .mob-card.mob-sandwich {
+      border: 2px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    .mob-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .mob-info {
+      flex: 1;
+    }
+
+    .mob-name {
+      font-weight: 700;
+      color: #333;
+      font-size: 15px;
+    }
+
+    .mob-meta {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .mob-rows {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .mob-item label {
+      font-size: 10px;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .mob-item .v {
+      font-size: 14px;
+      font-family: monospace;
+      color: #333;
+      margin-top: 2px;
+    }
+
+    .mob-loc {
+      font-size: 11px;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    /* Photo Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-img {
+      max-width: 300px;
+      width: 100%;
+      border-radius: 16px;
+      border: 3px solid white;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="assets/logo.png" alt="Mevrick Logo" style="height: 60px; width: 60px; object-fit: contain; background: white; border-radius: 50%; padding: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+      <a class="logo" href="index.html">MEVTENCIA</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <!-- <li><a href="AdminDashboard.html">Dashboard</a></li> -->
+      <li><a href="AddEmployee.html">Add Employee</a></li>
+      <li><a href="EmployeeHistory.html">Registered</a></li>
+      <li><a href="index.html" onclick="adminLogout()">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <div class="header-card">
+      <div>
+        <h2>Admin Dashboard — Attendance Monitoring</h2>
+        <p>Real-time Pan India Monitoring · View all employee logs · Mevrick Solution Pvt. Ltd.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <a href="AddEmployee.html"
+          style="background:#4caf50;color:white;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;">+
+          Add Employee</a>
+        <a href="EmployeeHistory.html"
+          style="background:#3f51b5;color:white;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;">👥
+          Registered</a>
+        <a class="logout-btn" href="index.html" onclick="adminLogout()">Logout</a>
+      </div>
+    </div>
+
+    <!-- Stats Row — now 5 cards (added Sandwich) -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="num" id="statTotal">0</div>
+        <div class="lbl">Total Records</div>
+      </div>
+      <div class="stat-card">
+        <div class="num green" id="statFull">0</div>
+        <div class="lbl">Full Day</div>
+      </div>
+      <div class="stat-card">
+        <div class="num orange" id="statHalf">0</div>
+        <div class="lbl">Half Day</div>
+      </div>
+      <div class="stat-card">
+        <div class="num blue" id="statLive">0</div>
+        <div class="lbl">In Progress</div>
+      </div>
+      <!-- NEW: Sandwich stat card -->
+      <div class="stat-card sandwich-stat" onclick="scrollToSandwichPanel()" title="Click to view sandwich cases">
+        <div class="num amber" id="statSandwich">0</div>
+        <div class="lbl">🥪 Sandwich Leaves</div>
+      </div>
+    </div>
+
+    <!-- ── SANDWICH ALERT PANEL (shown only when cases exist) ── -->
+    <div class="sandwich-panel" id="sandwichPanel">
+      <div class="sandwich-panel-header">
+        <div>
+          <div class="sandwich-panel-title">
+            🥪 Sandwich Leave Alert
+          </div>
+          <div class="sandwich-panel-sub">
+            These employees took leave on a working day adjacent to a weekend — extending their break.
+          </div>
+        </div>
+        <button class="sandwich-toggle-btn" onclick="toggleSandwichList()">▼ Show Details</button>
+      </div>
+
+      <div class="sandwich-list" id="sandwichList">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <div class="filters">
+      <input type="text" id="searchFilter" placeholder="🔍 Search by Name, ID, City, Dept..."
+        oninput="renderRecords()" />
+      <input type="date" id="dateFilter" onchange="renderRecords()" />
+      <select id="typeFilter" onchange="renderRecords()" style="max-width:160px;">
+        <option value="">All Types</option>
+        <option value="Full Day">Full Day</option>
+        <option value="Half Day">Half Day</option>
+        <option value="In Progress">In Progress</option>
+      </select>
+      <button class="filter-btn" onclick="clearFilters()">✕ Clear</button>
+      <button class="filter-btn" onclick="renderRecords()">⟳ Refresh</button>
+      <button class="export-btn" onclick="exportToCSV()">
+        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24">
+          <path
+            d="M14,2L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H14M18,20V9H13V4H6V20H18M10.7,15.58L13.5,13.5L10.7,11.42V13H4.5V14H10.7V15.58Z" />
+        </svg>
+        Export CSV
+      </button>
+    </div>
+
+    <!-- Desktop Table -->
+    <div class="table-container">
+      <div class="table-header">
+        <h3>Attendance Records</h3>
+        <span class="record-count" id="recordCount">— records</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Employee</th>
+            <th>City</th>
+            <th>Date</th>
+            <th>Clock In</th>
+            <th>Clock Out</th>
+            <th>Work Hours</th>
+            <th>Location</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td colspan="9" style="text-align:center;padding:40px;color:#aaa;">Loading records...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mobile Cards -->
+    <div class="mobile-list" id="mobileList"></div>
+
+  </div>
+
+  <!-- Photo Modal -->
+  <div class="modal-overlay" id="photoModal" onclick="closeModal()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-img" id="modalImg" alt="Employee Photo" />
+  </div>
+
+  <script>
+    window.onload = function () {
+      if (!localStorage.getItem('mev_adminSession')) { window.location.href = 'AdminLogin.html'; return; }
+      renderRecords();
+      setInterval(renderRecords, 30000);
+    };
+
+    async function getAllRecords() {
+      try {
+        const response = await fetch('/api/attendance');
+        if (response.ok) return await response.json();
+      } catch (e) { console.error('Fetch failed:', e); }
+      return JSON.parse(localStorage.getItem('mev_adminLog') || '[]');
+    }
+
+    function parseDate(dateStr) {
+      if (!dateStr) return '';
+      if (dateStr.includes('/')) {
+        const p = dateStr.split('/');
+        return `${p[2]}-${p[1]}-${p[0]}`;
+      }
+      return dateStr;
+    }
+
+    function getBadge(type) {
+      if (!type || type === 'In Progress') return '<span class="status-badge badge-working">● In Progress</span>';
+      if (type === 'Full Day') return '<span class="status-badge badge-fullday">✓ Full Day</span>';
+      if (type.includes('Half')) return '<span class="status-badge badge-halfday">½ Half Day</span>';
+      return `<span class="status-badge badge-working">${type}</span>`;
+    }
+
+    /* ────────────────────────────────────────────────
+       SANDWICH LEAVE DETECTION
+       A "sandwich" occurs when an employee's attendance
+       record falls on a working day (Mon–Fri) that is
+       directly adjacent to a weekend (Sat/Sun), AND
+       there is a gap showing the employee was absent
+       on those adjacent working days.
+
+       Logic:
+       1. Group all records by employee.
+       2. Sort each employee's attendance dates.
+       3. For each consecutive pair (d1 → d2), examine
+          the gap days between them.
+       4. If the gap contains both weekend days AND
+          working-day absences that sit right next to
+          those weekends → sandwich detected.
+       5. Mark the bordering records (d1 and d2) with
+          the sandwich flag.
+    ──────────────────────────────────────────────── */
+    function detectSandwichLeaves(allRecords) {
+      // Build a map: empKey → { name, id, dates: Set<"YYYY-MM-DD"> }
+      const byEmp = {};
+      allRecords.forEach(r => {
+        const key = r.emp_id || r.emp_name || 'unknown';
+        if (!byEmp[key]) byEmp[key] = { name: r.emp_name, id: r.emp_id, dates: new Set() };
+        const d = parseDate(r.date);
+        if (d) byEmp[key].dates.add(d);
+      });
+
+      // sandwichKeys: Set of strings "empKey|YYYY-MM-DD" for records that border a sandwich
+      const sandwichKeys = new Set();
+      // sandwichCases: array of human-readable case objects for the panel
+      const sandwichCases = [];
+
+      for (const [empKey, emp] of Object.entries(byEmp)) {
+        const sortedDates = Array.from(emp.dates).sort(); // lexicographic works for ISO dates
+        if (sortedDates.length < 2) continue;
+
+        for (let i = 0; i < sortedDates.length - 1; i++) {
+          const d1 = new Date(sortedDates[i]);
+          const d2 = new Date(sortedDates[i + 1]);
+          const diffDays = Math.round((d2 - d1) / 86400000); // ms → days
+
+          if (diffDays <= 1) continue; // consecutive or same day — no gap
+
+          // Collect info about every day in the gap (exclusive of d1 and d2)
+          const gapDays = [];
+          for (let j = 1; j < diffDays; j++) {
+            const g = new Date(d1);
+            g.setDate(g.getDate() + j);
+            const dow = g.getDay(); // 0=Sun, 6=Sat
+            gapDays.push({ date: g, isWeekend: dow === 0 || dow === 6 });
+          }
+
+          const hasWeekendInGap = gapDays.some(g => g.isWeekend);
+          const absentWorkingDays = gapDays.filter(g => !g.isWeekend);
+
+          if (!hasWeekendInGap || absentWorkingDays.length === 0) continue;
+
+          // Now check: are any of the absent working days directly adjacent to a weekend?
+          // i.e., the day before or after the absent day is a Sat or Sun.
+          const trulySandwiched = absentWorkingDays.filter(({ date }) => {
+            const prev = new Date(date); prev.setDate(prev.getDate() - 1);
+            const next = new Date(date); next.setDate(next.getDate() + 1);
+            const prevDow = prev.getDay();
+            const nextDow = next.getDay();
+            return prevDow === 0 || prevDow === 6 || nextDow === 0 || nextDow === 6;
+          });
+
+          if (trulySandwiched.length === 0) continue;
+
+          // Flag the two bordering attendance dates
+          sandwichKeys.add(`${empKey}|${sortedDates[i]}`);
+          sandwichKeys.add(`${empKey}|${sortedDates[i + 1]}`);
+
+          // Format absent dates for display
+          const absentLabels = trulySandwiched.map(({ date }) => {
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            return `${days[date.getDay()]} ${date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}`;
+          });
+
+          sandwichCases.push({
+            empName: emp.name || 'Unknown',
+            empId: emp.id || '',
+            from: sortedDates[i],
+            to: sortedDates[i + 1],
+            absentLabels,
+          });
+        }
+      }
+
+      return { sandwichKeys, sandwichCases };
+    }
+
+    // Helper: build the lookup key used in sandwichKeys
+    function sandwichKey(r) {
+      const empKey = r.emp_id || r.emp_name || 'unknown';
+      const d = parseDate(r.date);
+      return `${empKey}|${d}`;
+    }
+
+    // Toggle the detail list inside the sandwich panel
+    function toggleSandwichList() {
+      const list = document.getElementById('sandwichList');
+      const btn = document.querySelector('.sandwich-toggle-btn');
+      const open = list.classList.toggle('open');
+      btn.textContent = open ? '▲ Hide Details' : '▼ Show Details';
+    }
+
+    function scrollToSandwichPanel() {
+      const panel = document.getElementById('sandwichPanel');
+      if (panel.classList.contains('visible')) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Auto-open the list
+        const list = document.getElementById('sandwichList');
+        const btn = document.querySelector('.sandwich-toggle-btn');
+        list.classList.add('open');
+        btn.textContent = '▲ Hide Details';
+      }
+    }
+
+    let lastFilteredData = [];
+
+    async function renderRecords() {
+      const all = await getAllRecords();
+
+      // ── Sandwich detection runs on ALL records (not filtered) ──
+      const { sandwichKeys, sandwichCases } = detectSandwichLeaves(all);
+
+      // ── Populate Sandwich Panel ──
+      const panel = document.getElementById('sandwichPanel');
+      const list = document.getElementById('sandwichList');
+      document.getElementById('statSandwich').textContent = sandwichCases.length;
+
+      if (sandwichCases.length > 0) {
+        panel.classList.add('visible');
+        list.innerHTML = sandwichCases.map(c => {
+          const absentStr = c.absentLabels.join(', ');
+          return `<div class="sandwich-case-card">
+            <div class="sc-left">
+              <div class="sc-name">${c.empName}</div>
+              <div class="sc-id">${c.empId}</div>
+              <span class="sc-tag">🥪 Sandwich Leave</span>
+            </div>
+            <div class="sc-right">
+              <div class="sc-absent">Absent: ${absentStr}</div>
+              <div class="sc-range">Between ${c.from} → ${c.to}</div>
+            </div>
+          </div>`;
+        }).join('');
+      } else {
+        panel.classList.remove('visible');
+        list.innerHTML = '';
+      }
+
+      // ── Filters ──
+      const search = document.getElementById('searchFilter').value.toLowerCase();
+      const dateVal = document.getElementById('dateFilter').value;
+      const typeVal = document.getElementById('typeFilter').value;
+
+      let filtered = all.filter(r => {
+        const matchS = !search || [r.emp_name, r.emp_id, r.city, r.dept, r.location].some(v => (v || '').toLowerCase().includes(search));
+        const matchD = !dateVal || parseDate(r.date) === dateVal;
+        const matchT = !typeVal || (r.attendance_type || 'In Progress').includes(typeVal);
+        return matchS && matchD && matchT;
+      });
+
+      filtered.sort((a, b) => parseDate(b.date).localeCompare(parseDate(a.date)));
+      lastFilteredData = filtered;
+
+      // ── Stats ──
+      document.getElementById('statTotal').textContent = all.length;
+      document.getElementById('statFull').textContent = all.filter(r => r.attendance_type === 'Full Day').length;
+      document.getElementById('statHalf').textContent = all.filter(r => (r.attendance_type || '').includes('Half')).length;
+      document.getElementById('statLive').textContent = all.filter(r => !r.clock_out || r.attendance_type === 'In Progress').length;
+      document.getElementById('recordCount').textContent = `${filtered.length} record${filtered.length !== 1 ? 's' : ''}`;
+
+      // ── Desktop Table ──
+      const tbody = document.getElementById('tableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="9" class="empty-row" style="text-align:center;padding:40px;color:#aaa;">
+          ${all.length ? 'No records match your filters.' : 'No attendance records yet. Employees will appear here after clocking in.'}
+        </td></tr>`;
+      } else {
+        tbody.innerHTML = filtered.map(r => {
+          const isSandwich = sandwichKeys.has(sandwichKey(r));
+          const photoEl = r.photo
+            ? `<img class="emp-photo" src="${r.photo}" alt="" onclick="openModal('${r.photo.replace(/'/g, "\\'")}')"/>`
+            : `<div class="emp-photo-placeholder"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
+          const sandwichBadge = isSandwich
+            ? `<div><span class="badge-sandwich">🥪 Sandwich Leave</span></div>`
+            : '';
+          return `<tr class="${isSandwich ? 'row-sandwich' : ''}">
+            <td>${photoEl}</td>
+            <td>
+              <div class="emp-name">${r.emp_name || '—'}</div>
+              <div class="emp-id">${r.emp_id || ''}</div>
+              <div class="emp-dept">${r.dept || ''}</div>
+            </td>
+            <td>${r.city || '—'}</td>
+            <td>${r.date || '—'}</td>
+            <td class="time-val">${r.clock_in || '—'}</td>
+            <td class="time-val">${r.clock_out || '<span style="color:#ccc">—</span>'}</td>
+            <td class="time-val">${r.work_hours || '<span style="color:#ccc">—</span>'}</td>
+            <td>
+              <div class="loc-val" title="${r.location || ''}">${r.location || 'Unknown'}</div>
+              ${r.lat && r.lng ? `<a class="map-link" href="https://www.google.com/maps?q=${r.lat},${r.lng}" target="_blank">
+                <svg style="width:12px;height:12px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87,-3.13,-7,-7,-7zm0,9.5c-1.38,0,-2.5,-1.12,-2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5,-1.12,2.5,-2.5,2.5z"/></svg>
+                View Map
+              </a>` : ''}
+            </td>
+            <td>
+              ${getBadge(r.attendance_type)}
+              ${sandwichBadge}
+            </td>
+          </tr>`;
+        }).join('');
+      }
+
+      // ── Mobile Cards ──
+      const mob = document.getElementById('mobileList');
+      if (!filtered.length) {
+        mob.innerHTML = `<div style="text-align:center;padding:40px;color:#aaa;font-size:14px;">
+          ${all.length ? 'No records match filters.' : 'No records yet.'}
+        </div>`;
+      } else {
+        mob.innerHTML = filtered.map(r => {
+          const isSandwich = sandwichKeys.has(sandwichKey(r));
+          const photoEl = r.photo
+            ? `<img class="emp-photo" src="${r.photo}" alt="" onclick="openModal('${r.photo.replace(/'/g, "\\'")}')"/>`
+            : `<div class="emp-photo-placeholder"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
+          const sandwichBadge = isSandwich ? `<div style="margin-top:8px;"><span class="badge-sandwich">🥪 Sandwich Leave</span></div>` : '';
+          return `<div class="mob-card${isSandwich ? ' mob-sandwich' : ''}">
+            <div class="mob-top">
+              ${photoEl}
+              <div class="mob-info">
+                <div class="mob-name">${r.emp_name || 'Unknown'}</div>
+                <div class="mob-meta">${r.emp_id || ''} · ${r.dept || ''} · ${r.city || ''}</div>
+              </div>
+              ${getBadge(r.attendance_type)}
+            </div>
+            <div class="mob-rows">
+              <div class="mob-item"><label>Date</label><div class="v">${r.date || '—'}</div></div>
+              <div class="mob-item"><label>Clock In</label><div class="v">${r.clock_in || '—'}</div></div>
+              <div class="mob-item"><label>Clock Out</label><div class="v">${r.clock_out || '—'}</div></div>
+              <div class="mob-item"><label>Hours</label><div class="v">${r.work_hours || '—'}</div></div>
+            </div>
+            ${sandwichBadge}
+            <div class="mob-loc">
+              📍 ${r.location || 'Unknown location'}
+              ${r.lat && r.lng ? `<br/><a class="map-link" href="https://www.google.com/maps?q=${r.lat},${r.lng}" target="_blank" style="margin-top:8px;font-size:12px">View Exact Location on Map</a>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+      }
+    }
+
+    function clearFilters() {
+      document.getElementById('searchFilter').value = '';
+      document.getElementById('dateFilter').value = '';
+      document.getElementById('typeFilter').value = '';
+      renderRecords();
+    }
+
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('photoModal').classList.add('show');
+    }
+    function closeModal() { document.getElementById('photoModal').classList.remove('show'); }
+
+    function adminLogout() { localStorage.removeItem('mev_adminSession'); }
+
+    function exportToCSV() {
+      if (!lastFilteredData.length) { alert("No records to export!"); return; }
+
+      const headers = ["Employee Name", "Employee ID", "Department", "City", "Date", "Clock In", "Clock Out", "Work Hours", "Location", "Status", "Sandwich Leave"];
+      const rows = lastFilteredData.map(r => [
+        `"${r.emp_name || ''}"`,
+        `"${r.emp_id || ''}"`,
+        `"${r.dept || ''}"`,
+        `"${r.city || ''}"`,
+        `"${r.date || ''}"`,
+        `"${r.clock_in || ''}"`,
+        `"${r.clock_out || ''}"`,
+        `"${r.work_hours || ''}"`,
+        `"${r.location || ''}"`,
+        `"${r.attendance_type || 'In Progress'}"`,
+        `"${r._isSandwich ? 'Yes' : 'No'}"`
+      ]);
+
+      let csv = "data:text/csv;charset=utf-8,"
+        + headers.join(",") + "\n"
+        + rows.map(e => e.join(",")).join("\n");
+
+      const link = document.createElement("a");
+      link.setAttribute("href", encodeURI(csv));
+      link.setAttribute("download", `Attendance_Report_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+
+>>>>>>> 6e4cc574b61a6472fdb29c24a8e30a40f5a1a11c
 </html>
